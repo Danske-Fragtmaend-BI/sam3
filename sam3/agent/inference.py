@@ -37,7 +37,7 @@ def run_single_image_inference(
     # Check if output already exists and skip
     if os.path.exists(output_json_path):
         print(f"Output JSON {output_json_path} already exists. Skipping.")
-        return
+        return output_image_path, output_json_path
 
     print(f"{'-'*30} Starting SAM 3 Agent Session... {'-'*30} ")
     agent_history, final_output_dict, rendered_final_output = agent_inference(
@@ -62,4 +62,4 @@ def run_single_image_inference(
     print(f"Output JSON: {output_json_path}")
     print(f"Output Image: {output_image_path}")
     print(f"Agent History: {agent_history_path}")
-    return output_image_path
+    return output_image_path, output_json_path

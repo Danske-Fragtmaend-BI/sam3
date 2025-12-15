@@ -63,17 +63,23 @@ def call_sam_service(
         text_prompt.replace("/", "_") if "/" in text_prompt else text_prompt
     )
 
-    os.makedirs(
-        os.path.join(output_folder_path, image_path.replace("/", "-")), exist_ok=True
+    # Use a sanitized identifier so Windows paths do not collapse the output dir
+    safe_image_id = (
+        image_path.replace(":", "")
+        .replace("\\", "/")
+        .strip("/")
+        .replace("/", "-")
     )
+
+    os.makedirs(os.path.join(output_folder_path, safe_image_id), exist_ok=True)
     output_json_path = os.path.join(
         output_folder_path,
-        image_path.replace("/", "-"),
+        safe_image_id,
         rf"{text_prompt_for_save_path}.json",
     )
     output_image_path = os.path.join(
         output_folder_path,
-        image_path.replace("/", "-"),
+        safe_image_id,
         rf"{text_prompt_for_save_path}.png",
     )
 
